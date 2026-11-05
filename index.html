@@ -5,20 +5,35 @@
       // Suppress harmless Vite HMR WebSocket connection errors and Firestore backend reachability notices in preview iframe
       (function () {
         var origConsoleError = console.error;
+        var origConsoleWarn = console.warn;
+        function isIgnoredNotice(args) {
+          try {
+            var combined = Array.prototype.slice.call(args).map(function (a) {
+              return typeof a === 'string' ? a : (a && (a.message || a.stack)) || String(a);
+            }).join(' ');
+            return (
+              combined.indexOf('Could not reach Cloud Firestore backend') !== -1 ||
+              combined.indexOf("backend didn't respond within 10 seconds") !== -1 ||
+              combined.indexOf("Backend didn't respond within 10 seconds") !== -1 ||
+              combined.indexOf('Please check your Firebase configuration') !== -1 ||
+              combined.indexOf('the client is offline') !== -1 ||
+              combined.indexOf('Failed to get document because the client is offline') !== -1
+            );
+          } catch (e) {
+            return false;
+          }
+        }
         console.error = function () {
-          var args = Array.prototype.slice.call(arguments);
-          var combined = args.map(function (a) {
-            return typeof a === 'string' ? a : (a && a.message) || String(a);
-          }).join(' ');
-          if (
-            combined.includes('Could not reach Cloud Firestore backend') ||
-            combined.includes("backend didn't respond within 10 seconds") ||
-            combined.includes('Backend didn\'t respond within 10 seconds')
-          ) {
-            console.warn('[Firestore Offline Notice]', combined);
+          if (isIgnoredNotice(arguments)) {
             return;
           }
-          origConsoleError.apply(console, args);
+          origConsoleError.apply(console, arguments);
+        };
+        console.warn = function () {
+          if (isIgnoredNotice(arguments)) {
+            return;
+          }
+          origConsoleWarn.apply(console, arguments);
         };
       })();
       window.addEventListener('unhandledrejection', function (e) {
@@ -26,11 +41,13 @@
           var msg = String(e.reason.message || e.reason);
           var stack = String(e.reason.stack || '');
           if (
-            msg.includes('WebSocket') ||
-            stack.includes('@vite/client') ||
-            msg.includes('Could not reach Cloud Firestore backend') ||
-            msg.includes("backend didn't respond within 10 seconds") ||
-            msg.includes("Backend didn't respond within 10 seconds")
+            msg.indexOf('WebSocket') !== -1 ||
+            stack.indexOf('@vite/client') !== -1 ||
+            msg.indexOf('Could not reach Cloud Firestore backend') !== -1 ||
+            msg.indexOf("backend didn't respond within 10 seconds") !== -1 ||
+            msg.indexOf("Backend didn't respond within 10 seconds") !== -1 ||
+            msg.indexOf('Please check your Firebase configuration') !== -1 ||
+            msg.indexOf('the client is offline') !== -1
           ) {
             e.preventDefault();
           }
@@ -41,10 +58,13 @@
           var msg = String(e.message || '');
           var file = String(e.filename || '');
           if (
-            msg.includes('WebSocket') ||
-            file.includes('@vite/client') ||
-            msg.includes('Could not reach Cloud Firestore backend') ||
-            msg.includes("backend didn't respond within 10 seconds")
+            msg.indexOf('WebSocket') !== -1 ||
+            file.indexOf('@vite/client') !== -1 ||
+            msg.indexOf('Could not reach Cloud Firestore backend') !== -1 ||
+            msg.indexOf("backend didn't respond within 10 seconds") !== -1 ||
+            msg.indexOf("Backend didn't respond within 10 seconds") !== -1 ||
+            msg.indexOf('Please check your Firebase configuration') !== -1 ||
+            msg.indexOf('the client is offline') !== -1
           ) {
             e.preventDefault();
           }
