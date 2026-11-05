@@ -1,0 +1,115 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net: Default-deny all undefined paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'joycemasanja979@gmail.com' ||
+        request.auth.token.email == 'boniphacejndege@gmail.com' ||
+        request.auth.token.email == 'bishboniphace.ndege@gmail.com' ||
+        request.auth.token.email == 'drboniphacendege@gmail.com' ||
+        request.auth.token.email == 'boniphacendege@gmail.com' ||
+        request.auth.token.email == 'bishdrboniphacendege@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'displayName', 'role']) &&
+        data.uid is string && data.uid.size() > 0 && data.uid.size() <= 128 &&
+        data.email is string && data.email.size() > 0 && data.email.size() <= 256 &&
+        data.displayName is string && data.displayName.size() > 0 && data.displayName.size() <= 128 &&
+        data.role in ['admin', 'user'];
+    }
+
+    function isValidActivity(data) {
+      return data.keys().hasAll(['id', 'userId', 'type', 'description']) &&
+        data.id is string && data.id.size() > 0 && data.id.size() <= 128 &&
+        data.userId is string && data.userId == request.auth.uid &&
+        data.type is string && data.type.size() > 0 && data.type.size() <= 64 &&
+        data.description is string && data.description.size() <= 256;
+    }
+
+    function isValidPublicInquiry(data) {
+      return data.keys().hasAll(['name', 'email', 'message']) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 128 &&
+        data.email is string && data.email.size() > 0 && data.email.size() <= 256 &&
+        data.message is string && data.message.size() > 0 && data.message.size() <= 5000;
+    }
+
+    // Connection test document
+    match /test/{docId} {
+      allow read: if true;
+    }
+
+    // Portfolio Content Collection - Publicly viewable, editable only by verified admin
+    match /content/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Contact Inquiries - Public submission with validation, admin read and management
+    match /inquiries/{inquiryId} {
+      allow create: if isValidPublicInquiry(incoming());
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Admins registry
+    match /admins/{adminId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(userId) && isValidUser(incoming());
+      allow update: if (isOwner(userId) || isAdmin()) && isValidUser(incoming());
+      allow delete: if isOwner(userId) || isAdmin();
+
+      // User Activity subcollection (immutable audit logs)
+      match /activity/{activityId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && isValidActivity(incoming());
+        allow update: if false;
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+
+      // Client Inquiries subcollection
+      match /inquiries/{inquiryId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId);
+        allow update: if isOwner(userId) || isAdmin();
+        allow delete: if isOwner(userId) || isAdmin();
+      }
+    }
+  }
+}

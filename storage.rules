@@ -1,0 +1,58 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'bishboniphace.ndege@gmail.com' ||
+        request.auth.token.email == 'drboniphacendege@gmail.com' ||
+        request.auth.token.email == 'boniphacendege@gmail.com' ||
+        request.auth.token.email == 'boniphacejndege@gmail.com' ||
+        request.auth.token.email == 'joycemasanja979@gmail.com' ||
+        request.auth.token.email == 'bishdrboniphacendege@gmail.com'
+      );
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidFile() {
+      return request.resource.size < 250 * 1024 * 1024
+        && (
+          request.resource.contentType.matches('image/.*') ||
+          request.resource.contentType.matches('video/.*') ||
+          request.resource.contentType.matches('audio/.*') ||
+          request.resource.contentType == 'application/pdf' ||
+          request.resource.contentType == 'application/epub+zip' ||
+          request.resource.contentType == 'application/zip' ||
+          request.resource.contentType == 'application/x-zip-compressed' ||
+          request.resource.contentType == 'application/octet-stream' ||
+          request.resource.contentType.matches('application/.*') ||
+          request.resource.contentType.matches('text/.*')
+        );
+    }
+
+    // User profile images
+    match /users/{userId}/{allPaths=**} {
+      allow read: if true;
+      allow write: if (isOwner(userId) || isAdmin()) && isValidFile();
+    }
+
+    // Portfolio projects, assets, logos, showcase graphics, videos, attachments, and book documents
+    match /portfolio/{allPaths=**} {
+      allow read: if true;
+      allow write: if (isSignedIn() || isAdmin()) && isValidFile();
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

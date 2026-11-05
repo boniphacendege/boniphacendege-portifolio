@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth overflow-x-hidden max-w-full w-full">
+  <head>
+    <script>
+      // Suppress harmless Vite HMR WebSocket connection errors and Firestore backend reachability notices in preview iframe
+      (function () {
+        var origConsoleError = console.error;
+        console.error = function () {
+          var args = Array.prototype.slice.call(arguments);
+          var combined = args.map(function (a) {
+            return typeof a === 'string' ? a : (a && a.message) || String(a);
+          }).join(' ');
+          if (
+            combined.includes('Could not reach Cloud Firestore backend') ||
+            combined.includes("backend didn't respond within 10 seconds") ||
+            combined.includes('Backend didn\'t respond within 10 seconds')
+          ) {
+            console.warn('[Firestore Offline Notice]', combined);
+            return;
+          }
+          origConsoleError.apply(console, args);
+        };
+      })();
+      window.addEventListener('unhandledrejection', function (e) {
+        if (e && e.reason) {
+          var msg = String(e.reason.message || e.reason);
+          var stack = String(e.reason.stack || '');
+          if (
+            msg.includes('WebSocket') ||
+            stack.includes('@vite/client') ||
+            msg.includes('Could not reach Cloud Firestore backend') ||
+            msg.includes("backend didn't respond within 10 seconds") ||
+            msg.includes("Backend didn't respond within 10 seconds")
+          ) {
+            e.preventDefault();
+          }
+        }
+      });
+      window.addEventListener('error', function (e) {
+        if (e) {
+          var msg = String(e.message || '');
+          var file = String(e.filename || '');
+          if (
+            msg.includes('WebSocket') ||
+            file.includes('@vite/client') ||
+            msg.includes('Could not reach Cloud Firestore backend') ||
+            msg.includes("backend didn't respond within 10 seconds")
+          ) {
+            e.preventDefault();
+          }
+        }
+      });
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#041c10" />
+    
+    <!-- PWA & Mobile Web App Compliance -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Boniphace" />
+    <meta name="application-name" content="Boniphace Ndege" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- SEO Page Title & Meta Description with Professional Identity (Google Search optimized: Boniphace Ndege) -->
+    <title>Boniphace Ndege | Graphic Designer · Website Designer & Developer · Digital Content Creator</title>
+    <meta name="description" content="Official portfolio of Boniphace Ndege (Ev Dr. Boniphace J. Ndege) — Graphic Designer, Website Designer & Developer, and Digital Content Creator based in Dodoma CBD, Tanzania. Explore visual branding, modern responsive websites, and digital media." />
+    <meta name="author" content="Boniphace Ndege" />
+    <meta name="keywords" content="Boniphace Ndege, Ev Dr. Boniphace J. Ndege, Boniphace, Graphic Designer, Website Designer, Web Developer, Digital Content Creator, Visual Branding, Logo Design, Dodoma CBD Tanzania, AI Workflows" />
+    <meta http-equiv="content-language" content="en" />
+
+    <!-- Canonical URL Recognition -->
+    <link rel="canonical" href="https://boniphacendege.com/" />
+
+    <!-- Search Engine Robots Directives & Crawling Rules -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+    <!-- Google Search Console Verification Meta Tag (Ready for Token) -->
+    <meta name="google-site-verification" content="" />
+
+    <!-- OpenGraph Social Cards -->
+    <meta property="og:site_name" content="Boniphace Ndege" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://boniphacendege.com/" />
+    <meta property="og:title" content="Boniphace Ndege | Graphic Designer · Website Designer & Developer · Digital Content Creator" />
+    <meta property="og:description" content="Official portfolio of Boniphace Ndege — Graphic Designer, Website Designer & Developer, and Digital Content Creator based in Dodoma CBD, Tanzania." />
+    <meta property="og:image" content="https://boniphacendege.com/pwa-512x512.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Boniphace Ndege — Graphic Designer, Website Designer & Developer, Digital Content Creator" />
+
+    <!-- Twitter / X Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@boniphacendege" />
+    <meta name="twitter:creator" content="@boniphacendege" />
+    <meta name="twitter:title" content="Boniphace Ndege | Graphic Designer & Web Developer" />
+    <meta name="twitter:description" content="Official portfolio of Boniphace Ndege — Graphic Designer, Website Designer & Developer, and Digital Content Creator." />
+    <meta name="twitter:image" content="https://boniphacendege.com/pwa-512x512.png" />
+    <meta name="twitter:image:alt" content="Boniphace Ndege Portfolio" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Comprehensive Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://boniphacendege.com/#website",
+          "url": "https://boniphacendege.com/",
+          "name": "Boniphace Ndege",
+          "description": "Official professional portfolio of Boniphace Ndege — Graphic Designer, Website Designer & Developer, Digital Content Creator",
+          "inLanguage": "en-US",
+          "publisher": {
+            "@id": "https://boniphacendege.com/#person"
+          }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://boniphacendege.com/#person",
+          "name": "Boniphace Ndege",
+          "alternateName": [
+            "Ev Dr. Boniphace J. Ndege",
+            "Dr. Boniphace J. Ndege",
+            "Boniphace J. Ndege",
+            "Boniphace"
+          ],
+          "jobTitle": "Graphic Designer, Website Designer & Developer, Digital Content Creator",
+          "description": "Graphic Designer, Website Designer & Developer, and Digital Content Creator specializing in brand identity, responsive web development, and AI-assisted creative workflows.",
+          "url": "https://boniphacendege.com/",
+          "image": "https://boniphacendege.com/pwa-512x512.png",
+          "email": "drboniphacendege@gmail.com",
+          "telephone": "+255 765 326 515",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Dodoma CBD",
+            "addressRegion": "Dodoma",
+            "addressCountry": "Tanzania"
+          },
+          "sameAs": [
+            "https://github.com/boniphacendege",
+            "https://linkedin.com/in/boniphace-ndege",
+            "https://behance.net/boniphacendege",
+            "https://dribbble.com/boniphacendege",
+            "https://instagram.com/boniphace.designs",
+            "https://facebook.com/boniphacendege",
+            "https://x.com/boniphacendege"
+          ],
+          "knowsAbout": [
+            "Graphic Design",
+            "Visual Branding & Brand Identity Systems",
+            "Flyer and Poster Design",
+            "Packaging & Label Design",
+            "Website Design",
+            "Responsive Web Development",
+            "HTML5, CSS3, Tailwind CSS",
+            "JavaScript, TypeScript, React",
+            "Digital Content Creation",
+            "AI-Assisted Design Workflows",
+            "Prompt Engineering",
+            "UI/UX Design & Prototyping"
+          ]
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://boniphacendege.com/#profilepage",
+          "url": "https://boniphacendege.com/",
+          "name": "Ev Dr. Boniphace J. Ndege — Professional Portfolio",
+          "isPartOf": {
+            "@id": "https://boniphacendege.com/#website"
+          },
+          "mainEntity": {
+            "@id": "https://boniphacendege.com/#person"
+          },
+          "dateCreated": "2024-01-01",
+          "dateModified": "2026-11-01",
+          "inLanguage": "en-US"
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="bg-[#010503] text-[#f4fff8] font-sans antialiased selection:bg-[#3dff8f]/20 selection:text-[#3dff8f] overflow-x-hidden max-w-full w-full relative">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

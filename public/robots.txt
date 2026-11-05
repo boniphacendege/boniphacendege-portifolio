@@ -1,0 +1,29 @@
+# Robots.txt for Ev Dr. Boniphace J. Ndege Professional Portfolio
+# Canonical Domain: https://boniphacendege.com
+
+User-agent: *
+Allow: /
+Allow: /#about
+Allow: /#services
+Allow: /#projects
+Allow: /#skills
+Allow: /#experience
+Allow: /#ai-workflow
+Allow: /#testimonials
+Allow: /#contact
+Allow: /icon.svg
+Allow: /pwa-192x192.png
+Allow: /pwa-512x512.png
+Allow: /manifest.webmanifest
+
+# Disallow private admin, dashboard, API endpoints, and authenticated query states
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /*?admin=*
+Disallow: /*?passcode=*
+Disallow: /*?token=*
+
+# Search Engine Sitemap Location
+Sitemap: https://boniphacendege.com/sitemap.xml

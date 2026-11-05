@@ -1,0 +1,117 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered user profile information and settings",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "photoURL": { "type": "string", "maxLength": 500000 },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "phoneNumber": { "type": "string", "maxLength": 32 },
+        "location": { "type": "string", "maxLength": 128 },
+        "bio": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "maxLength": 64 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["uid", "email", "displayName", "role"]
+    },
+    "UserActivity": {
+      "title": "UserActivity",
+      "description": "Logs of user login, profile update, and security actions",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "maxLength": 64 },
+        "description": { "type": "string", "maxLength": 256 },
+        "timestamp": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "type", "description"]
+    },
+    "ClientInquiry": {
+      "title": "ClientInquiry",
+      "description": "Project service inquiry submitted by a registered user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "serviceTitle": { "type": "string", "maxLength": 128 },
+        "budgetRange": { "type": "string", "maxLength": 64 },
+        "deadline": { "type": "string", "maxLength": 64 },
+        "message": { "type": "string", "maxLength": 2000 },
+        "status": { "type": "string", "enum": ["received", "in_review", "quoted", "in_progress", "completed"] },
+        "createdAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["id", "userId", "serviceTitle", "message"]
+    },
+    "PortfolioContent": {
+      "title": "PortfolioContent",
+      "description": "Global portfolio configuration including profile, projects, skills, services, workflow, and testimonials",
+      "type": "object",
+      "properties": {
+        "profile": { "type": "object" },
+        "services": { "type": "array" },
+        "skills": { "type": "array" },
+        "projects": { "type": "array" },
+        "books": { "type": "array" },
+        "bookCategories": { "type": "array" },
+        "blogPosts": { "type": "array" },
+        "blogCategories": { "type": "array" },
+        "videos": { "type": "array" },
+        "videoCategories": { "type": "array" },
+        "aiWorkflow": { "type": "array" },
+        "workExperience": { "type": "array" },
+        "education": { "type": "array" },
+        "certifications": { "type": "array" },
+        "achievements": { "type": "array" },
+        "testimonials": { "type": "array" },
+        "inquiries": { "type": "array" },
+        "adminPasscodeHash": { "type": "string", "maxLength": 128 },
+        "updatedAt": { "type": "string", "maxLength": 64 }
+      },
+      "required": ["profile", "services", "skills", "projects"]
+    },
+    "PublicInquiry": {
+      "title": "PublicInquiry",
+      "description": "Public contact inquiry submitted via website contact form",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "phone": { "type": "string", "maxLength": 64 },
+        "subject": { "type": "string", "maxLength": 256 },
+        "service": { "type": "string", "maxLength": 128 },
+        "message": { "type": "string", "maxLength": 5000 },
+        "timestamp": { "type": "string", "maxLength": 64 },
+        "read": { "type": "boolean" }
+      },
+      "required": ["name", "email", "message"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents indexed by user UID"
+    },
+    "/users/{userId}/activity/{activityId}": {
+      "schema": "UserActivity",
+      "description": "Audit trail and security activity logs for a user"
+    },
+    "/users/{userId}/inquiries/{inquiryId}": {
+      "schema": "ClientInquiry",
+      "description": "Service inquiries and project briefs submitted by a user"
+    },
+    "/content/{docId}": {
+      "schema": "PortfolioContent",
+      "description": "Portfolio content document containing projects, skills, services, workflow, and profile data"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "PublicInquiry",
+      "description": "Inquiries submitted via the public contact form"
+    }
+  }
+}

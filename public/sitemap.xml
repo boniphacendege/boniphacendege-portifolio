@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  <!-- Primary Canonical Homepage -->
+  <url>
+    <loc>https://boniphacendege.com/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Section 1: About Ev Dr. Boniphace J. Ndege -->
+  <url>
+    <loc>https://boniphacendege.com/#about</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section 2: Professional Services -->
+  <url>
+    <loc>https://boniphacendege.com/#services</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Section 3: Portfolio & Featured Projects -->
+  <url>
+    <loc>https://boniphacendege.com/#projects</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Section 4: Skills & Creative Tools -->
+  <url>
+    <loc>https://boniphacendege.com/#skills</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Section 5: Work Experience, Education & Certifications -->
+  <url>
+    <loc>https://boniphacendege.com/#experience</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Section 6: AI-Assisted Design & Development Workflows -->
+  <url>
+    <loc>https://boniphacendege.com/#ai-workflow</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Section 7: Client Testimonials & Endorsements -->
+  <url>
+    <loc>https://boniphacendege.com/#testimonials</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Section 8: Contact, Inquiry & Booking -->
+  <url>
+    <loc>https://boniphacendege.com/#contact</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Case Study: Serengeti Horizons Visual Identity -->
+  <url>
+    <loc>https://boniphacendege.com/#project-prj-1</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Case Study: Lumina Creative Studio Platform -->
+  <url>
+    <loc>https://boniphacendege.com/#project-prj-2</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Case Study: Zanzibar Heritage Spices Packaging -->
+  <url>
+    <loc>https://boniphacendege.com/#project-prj-3</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Case Study: Zenith Studio AI Interface -->
+  <url>
+    <loc>https://boniphacendege.com/#project-prj-4</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
